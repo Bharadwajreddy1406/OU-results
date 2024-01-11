@@ -207,23 +207,13 @@
     <a href="/download/excel-file" class="button-29">DOWNLOAD EXE </a>
     </div>
         <script>
-        // JavaScript to handle the download when the button is clicked
         document.getElementById("downloadLink").addEventListener("click", function(event) {
-            // Prevent the default behavior of the anchor tag (preventing navigation)
             event.preventDefault();
-
-            // Create an invisible link element
             var link = document.createElement('a');
-            link.href = 'OU/TRINETRA.exe'; // Replace with the actual path to your file
-            link.download = 'TRINETRA.exe'; // Replace with the desired download filename
-
-            // Append the link to the document
+            link.href = 'OU/TRINETRA.exe'; 
+            link.download = 'TRINETRA.exe'; 
             document.body.appendChild(link);
-
-            // Trigger a click on the link to start the download
             link.click();
-
-            // Remove the link from the document after the download
             document.body.removeChild(link);
         });
     </script>
