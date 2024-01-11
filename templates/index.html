@@ -6,16 +6,36 @@
     <link rel="icon" type="image/png" href="{{url_for('static', filename='images/kmitlogo.png') }}">
 </head>
 <body>
+<!--    <header class="head">-->
+<!--        <div>-->
+<!--            <a href="https://www.osmania.ac.in/">-->
+<!--                <img src="{{url_for('static', filename='images/oulogo.png') }}" alt="kmitlogo"></a>-->
+<!--        </div>-->
+<!--        <div >-->
+<!--            <a href="https://www.kmit.in/">-->
+<!--                <img class="img" src="{{url_for('static', filename='images/ngitlogo.png') }}" alt="kmitlogo" height="75px" width="120px;"></a>-->
+<!--        </div>-->
+
+<!--        <div >-->
+<!--            <a href="https://www.kmit.in/">-->
+<!--                <img class="img1" src="{{url_for('static', filename='images/kmeclogo.png') }}" alt="kmitlogo" height="75px" width="150px;"></a>-->
+<!--        </div>-->
+
+<!--    </header>-->
+
     <header class="head">
         <div>
             <a href="https://www.osmania.ac.in/">
-                <img src="{{url_for('static', filename='images/oulogo.png') }}" alt="kmitlogo"></a>
+                <img class="img9" src="{{url_for('static', filename='images/oulogo.png') }}" alt="oulogo"></a>
         </div>
         <div >
             <a href="https://www.kmit.in/">
-                <img class="img" src="{{url_for('static', filename='images/kmitlogo.png') }}" alt="kmitlogo" height="75px" width="120px;"></a>
+                <img class="img8" src="{{url_for('static', filename='images/sponsorlogo.png') }}" alt="logo" height="75px" width="120px;"></a>
         </div>
+
+
     </header>
+
 
         {% if e_flag != 0 %}
                 <div class="popup-container {% if e_flag ==1 %}visible{% else %}hidden{% endif %}" id="popup1">
@@ -111,20 +131,105 @@
         <div  class="btn" id="content">
             <button id="startButton" class="button-29" onclick="showLoader()">SUBMIT AND DOWNLOAD</button>
         </div>
+        <div class="loader-container">
+            <div class="loading" id="loading">
+            <div class="spinner"></div>
+            </div>
+        </div>
     </form>
 
-    <div class="instructions">
+    <script>
+      document.getElementById("startButton").addEventListener("click", function() {
+        // Show the loading spinner
+        document.getElementById("loading").style.display = "block";
+
+        // Simulate a check for the session flag
+        checkSessionFlag();
+      });
+
+      function checkSessionFlag() {
+        // Make an asynchronous request to check the session flag
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.fileReady) {
+              // Hide the loading spinner when the file is ready
+              document.getElementById("loading").style.display = "none";
+
+              // Reset the session flag
+              resetSessionFlag();
+            } else {
+              // If the file is not ready, continue checking
+              setTimeout(checkSessionFlag, 100); // Check again in .1 second (adjust as needed)
+            }
+          }
+        };
+
+        xhr.open("GET", "/check_session_flag", true);
+        xhr.send();
+      }
+
+      function resetSessionFlag() {
+        // Make an asynchronous request to reset the session flag
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/reset_session_flag", true);
+        xhr.send();
+      }
+    </script>
+
+<div class="box">
+        <h2>INSTRUCTIONS:</h2>
         <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
-            s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book. It has survived not only five centuries, but also
-            the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem Ipsum
+            1. Enter a proper URL corresponding to the OU results website
+            E.g :- https://www.osmania.ac.in/res07/20230788.jsp<br/>
+            2. Make sure that the roll number you entered is a valid 12 digit number  <br/>
+            3. The roll number file must be a CSV File (OR) Excel File
+            and the file should contain nothing except Roll Numbers in a column <br/>
+            4. In the file , it's suggested to have a Column name for the roll numbers ,
+            and make sure that they stay in the first column.<br/>
+            5. If there's a Load on the server , Please try after a couple of minutes.<br/>
         </p>
+        <br>
+        <div class="abt">
+            <details>
+              <summary><h1>ABOUT US</h1></summary>
+              <p>This website is made by a passionate team consisting of K. Baba Gandhi, V. Bharadwaj Reddy, and
+                  P. Sagar (2022-2026 batch of KMIT). Our collective goal is to simplify the lives of employees
+                  across all colleges affiliated with Osmania University. With a firm belief in the power of
+                  technology and innovation, we have crafted a platform that streamlines the process of
+                  extracting and organizing result data. Our commitment to providing accurate and convenient
+                  Excel sheets enables them to access the academic results effortlessly.</p>
+            </details>
+        </div>
     </div>
-    <footer>
-        <span &copy>KMIT @ 2022-2026 (V.Bharadwaj Reddy , K.Baba Gandhi , P.Sagar)</span>
-    </footer>
+    <div class="download-btn" id="downloadLink" style="padding-bottom:30px;">
+    <a href="/download/excel-file" class="button-29">DOWNLOAD EXE </a>
+    </div>
+        <script>
+        // JavaScript to handle the download when the button is clicked
+        document.getElementById("downloadLink").addEventListener("click", function(event) {
+            // Prevent the default behavior of the anchor tag (preventing navigation)
+            event.preventDefault();
+
+            // Create an invisible link element
+            var link = document.createElement('a');
+            link.href = 'OU/TRINETRA.exe'; // Replace with the actual path to your file
+            link.download = 'TRINETRA.exe'; // Replace with the desired download filename
+
+            // Append the link to the document
+            document.body.appendChild(link);
+
+            // Trigger a click on the link to start the download
+            link.click();
+
+            // Remove the link from the document after the download
+            document.body.removeChild(link);
+        });
+    </script>
+
+
+
+    <div class="foot" >KMIT &#169 2022-2026 (V.Bharadwaj Reddy , K.Baba Gandhi , P.Sagar)</div>
 </body>
 </html>
